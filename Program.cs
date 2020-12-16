@@ -22,12 +22,13 @@ namespace vscode
             //This line starts writing the position of the cube
             var rubik = new List<int> {1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,2,3,3,3,3,3,3,3,3,3,4,4,4,4,4,4,4,4,4,5,5,5,5,5,5,5,5,5,6,6,6,6,6,6,6,6,6}; 
             //This line creates the Rubik's Cube
-            var testList = new List<int>{1,2,3,4};
-            var order = new List<int>{2, 0, 1, 3};
-            var moveF = new List<int> {1,1,1,1,1,5,5,5,2,2,2,2,2,2,2,2,2,1,3,3,1,3,3,1,3,3,1,3,3,4,4,4,4,4,4,4,4,5,5,6,5,5,6,5,5,6,6,6,3,6,6,3,6,6,3};
+            foreach (var number in rubik){
+                Console.Write(number);
+            }
+            var moveF = new List<int> {0,1,2,3,4,5,38,41,44,15,12,9,16,13,10,17,14,11,6,19,20,7,22,23,8,25,26,27,28,29,30,31,32,33,34,35,36,37,47,39,40,50,42,43,53,45,46,24,48,49,21,51,52,18};
             var newWorks = new List<int> {1,2,3,4,5,6,7,8,9,10,11,12,13,14,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54};
             //This pushes a new order onto the list, a method I just discovered. This streamlines significant portions of my code, so I'll be rewriting everything to 
-            var result = order.Select(i => testList[i]).ToList();
+            var result = moveF.Select(i => rubik[i]).ToList();
             //This line just verifies that a reordering of the list would work
             foreach (var number in result)
             {
@@ -38,10 +39,10 @@ namespace vscode
             Console.Write(rubik[1]);
             using (StreamWriter sw = File.CreateText(@"C:\vscode\outputs\sizetest.txt")){
                 //This is the output.
-                for (int i = 0; i < 4000000; i++){
+                for (int i = 0; i < 2; i++){
                 sw.Write("Test Output ");
                 sw.WriteLine(i * 4 * i * rand.Next(500));
-            }
+                }
             }
         }
     }
