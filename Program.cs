@@ -12,11 +12,6 @@ namespace vscode
         {
             var rubik = new List<int> {1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,2,3,3,3,3,3,3,3,3,3,4,4,4,4,4,4,4,4,4,5,5,5,5,5,5,5,5,5,6,6,6,6,6,6,6,6,6}; 
             //This line creates the Rubik's Cube
-            Console.Write("Starting position is: ");
-            //This line starts writing the position of the cube
-            foreach (var number in rubik){
-                Console.Write(number);
-            }
             //This is the code used to write the current position of the cube. 
             //It goes through every number of the list, and prints them out on a single line, forming a large number which represents the cube's current state
             List<int>[] move = new List<int>[12];
@@ -36,10 +31,11 @@ namespace vscode
             //These lines are the result of hours of work turning each individual move of the Rubik's cube into a sort of algorithm that can be applied to the base Rubik's cube
             //The underscores represent a counterclockwise movement
             var moveIndex = new List<String> {"F","F'","R","R'","U","U'","B","B'","L","L'","D","D'"};
-            using (StreamWriter sw = File.CreateText(@"C:\vscode\outputs\6 Moves.txt")){
+            using (StreamWriter sw = File.CreateText(@"C:\vscode\outputs\7 Moves.txt")){
             //This is the output. Streamwriter is a function used in C# that allows a creation and 'streaming' of text to a file. 
                 for (int p = 0; p < 11; p++){
-                        var move1Result = move[p].Select(i => rubik[i]).ToList();
+                    //This section is pretty complicated, too much to explain in comments, but a detailed explanation of how I got here is in the paper.
+                    var move1Result = move[p].Select(i => rubik[i]).ToList();
                     for (int u = 0; u < 11; u++){
                         var move2Result = move[u].Select(i => move1Result[i]).ToList();
                         for (int w = 0; w < 11; w++){
@@ -50,10 +46,13 @@ namespace vscode
                                     var move5Result = move[f].Select(i => move4Result[i]).ToList();
                                     for (int t = 0; t < 11; t++){
                                         var move6Result = move[t].Select(i => move5Result[i]).ToList();
-                                        foreach (var number in move6Result) {
-                                            sw.Write(number);
+                                        for (int k = 0; k < 11; k++){
+                                            var move7Result = move[k].Select(i => move6Result[i]).ToList();
+                                            foreach (var number in move7Result) {
+                                                sw.Write(number);
+                                            }
+                                            sw.WriteLine(" " + moveIndex[p] + " + " +moveIndex[u] + " + " + moveIndex[w] + " + " + moveIndex[q] + " + " + moveIndex[f] + " + " + moveIndex[t] + " + " + moveIndex[k]);
                                         }
-                                        sw.WriteLine(" " + moveIndex[p] + " + " +moveIndex[u] + " + " + moveIndex[w] + " + " + moveIndex[q] + " " + moveIndex[f] + " " + moveIndex[t]);
                                     }
                                 }
                             }
@@ -61,6 +60,14 @@ namespace vscode
                     }
                 }
             }
+        Console.WriteLine("Enter the current state of your Rubik's cube: ");
+        String lookingFor = Console.ReadLine();
+        Console.WriteLine("Here is every possible way to get there: ");
+        foreach (string line in File.ReadLines(@"C:\vscode\outputs\6 Moves.txt")){
+            if (line.Contains(lookingFor)){
+                Console.WriteLine(line);
+            }
         }
     }
+}
 }
